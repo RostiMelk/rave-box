@@ -1,0 +1,26 @@
+{
+	"name": "rave-box",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/RostiMelk/rave-box.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/RostiMelk/rave-box/issues"
+	},
+	"homepage": "https://github.com/RostiMelk/rave-box#readme",
+	"dependencies": {
+		"@huddly/device-api-usb": "^0.3.2",
+		"@huddly/sdk": "^0.6.4",
+		"play-sound": "^1.1.5"
+	}
+}
