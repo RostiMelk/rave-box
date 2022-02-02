@@ -11,10 +11,16 @@ let audio = null;
 let audioTimeout = null;
 
 (async () => {
+	console.log('Starting Rave Box...');
 	await sdk.init();
 
 	sdk.on('ATTACH', async (cameraManager) => {
-		const detector = await cameraManager.getDetector();
+		const info = await cameraManager.getInfo();
+
+		console.log(`${info.name} attached!`);
+		console.log(`Running version ${info.version}`);
+
+		const detector = await cameraManager.getDetector({ shouldAutoFrame: false });
 		await detector.init();
 
 		detector.on('DETECTIONS', (detections) => {
@@ -30,11 +36,17 @@ let audioTimeout = null;
 		process.on('SIGINT', async () => {
 			await detector.destroy();
 			await cameraManager.closeConnection();
+			console.log('Stopping Rave Box...');
 			process.exit();
 		});
 	});
 })();
 
+/**
+ * Play audio
+ *
+ * @returns {Promise<void>}
+ */
 async function playAudio() {
 	if (audioTimeout) {
 		audioTimeout = clearTimeout(audioTimeout);
@@ -46,6 +58,11 @@ async function playAudio() {
 	audio = player.play(file);
 }
 
+/**
+ * Stop audio
+ *
+ * @returns {void}
+ */
 function stopAudio() {
 	if (!audio || audioTimeout) return;
 
@@ -53,9 +70,14 @@ function stopAudio() {
 		console.log('Stopping audio');
 		audio.kill();
 		audio = null;
-	}, 2000);
+	}, 1000);
 }
 
+/**
+ * Get a random audio file from the audio folder
+ *
+ * @returns {string}
+ */
 function getRandomAudio() {
 	const audioDir = path.join(__dirname, 'audio');
 	const audioFiles = fs.readdirSync(audioDir).filter((file) => {

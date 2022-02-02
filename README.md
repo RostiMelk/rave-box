@@ -2,6 +2,10 @@
 
 Audio will start playing as soon as your Huddly camera recognizes a face, and stop once a face is not recognized after two seconds.
 
+### Requirements
+
+[Node JS (version 10.x and above)](https://nodejs.org/en/download/)
+
 ### How to use
 
 1. Connect your Huddly camera to your computer.
